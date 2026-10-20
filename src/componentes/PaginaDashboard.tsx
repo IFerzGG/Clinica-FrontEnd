@@ -43,49 +43,51 @@ export function PaginaDashboard() {
     ];
 
     return (
-    <main className="mx-auto max-w-5xl p-6">
-      {mantenimiento && (
-        <div className="mb-4 rounded bg-rose-100 p-3 text-rose-700">
-          El sistema está en mantenimiento.
-        </div>
-      )}
+    <main className="min-h-screen bg-gray-50 px-4 py-8 sm:px-6 lg:px-8">
+      
 
-      <header className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <StatusBadge activo={mantenimiento} />
-      </header>
-
-      <button
-        className="mb-6 rounded bg-slate-800 px-4 py-2 text-white"
-        onClick={() => setMantenimiento((activo) => !activo)}
-      >
-        {mantenimiento ? 'Desactivar' : 'Activar'} mantenimiento
-      </button>
-
-      <section className="grid gap-4 sm:grid-cols-2">
-        {metricas.map((metrica) => (
-          <div key={metrica.id}>
-            <MetricCard metrica={metrica} />
-
-            {metrica.id === 'pacientes' && (
-              <div className="mt-2 flex gap-2">
-                <button
-                  className="rounded border px-3 py-1"
-                  onClick={() => setPacientes((valor) => valor - 1)}
-                >
-                  −
-                </button>
-                <button
-                  className="rounded border px-3 py-1"
-                  onClick={() => setPacientes((valor) => valor + 1)}
-                >
-                  +
-                </button>
-              </div>
-            )}
+        {mantenimiento && (
+          <div role="alert" className="mb-5 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm font-medium text-rose-700">
+            El sistema está en mantenimiento.
           </div>
-        ))}
-      </section>
+        )}
+
+        <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight !text-gray-900">
+              Dashboard
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Resumen General del Sistema
+            </p>
+          </div>
+          <StatusBadge activo={mantenimiento} />
+        </header>
+
+        <div className="mb-8">
+          <button type="button" onClick={() => setMantenimiento((activo) => !activo)} className="inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 shadow-sm transition-colors duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+            {mantenimiento ? 'Desactivar' : 'Activar'} Mantenimiento
+          </button>
+        </div>
+
+        <section aria-label="Métricas del sistema" className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {metricas.map((metrica) => (
+            <div key={metrica.id}>
+              <MetricCard metrica={metrica} />
+              {metrica.id === 'pacientes' && (
+                <div className="mt-3 flex gap-2">
+                  <button type="button" aria-label="Disminuir pacientes"onClick={() => setPacientes((valor) => valor - 1)} className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700">
+                    -
+                  </button>
+                  <button type="button" aria-label="Aumentar pacientes" onClick={() => setPacientes((valor) => valor + 1)} className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700">
+                    +
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </section>
+      
     </main>
   );
 }
