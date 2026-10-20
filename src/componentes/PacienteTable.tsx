@@ -6,6 +6,8 @@ export interface PacienteProps {
 }
 
 export function PacienteTable({pacientes}:PacienteProps) {
+    const handleEliminar = () => {}
+    
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
@@ -59,6 +61,7 @@ export function PacienteTable({pacientes}:PacienteProps) {
                                             estado={paciente.estado}
                                             especialidadAsignada={paciente.especialidadAsignada}
                                             ultimaCita={paciente.ultimaCita}
+                                            onEliminar={handleEliminar}
                                         />
                                     ))
                                 )
