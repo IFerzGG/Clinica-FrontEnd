@@ -1,7 +1,7 @@
 export type EstadoPaciente = 'activo' | 'inactivo' | 'en_espera';
 
 export interface Paciente {
-  id: string;
+  id: number;
   nombre: string;
   apellido: string;
   email: string;
@@ -13,7 +13,7 @@ export interface Paciente {
 
 export const pacientesIniciales:Paciente[] = [
   {
-    id: '1',
+    id: 1,
     nombre: 'Juan',
     apellido: 'Pérez',
     email: 'usuario@example.com',
@@ -23,7 +23,7 @@ export const pacientesIniciales:Paciente[] = [
     estado: 'activo'
   },
   {
-    id: '2',
+    id: 2,
     nombre: 'María',
     apellido: 'Gómez',
     email: 'usuario@example.com',
@@ -33,7 +33,7 @@ export const pacientesIniciales:Paciente[] = [
     estado: 'inactivo'
   },
   {
-    id: '3',
+    id: 3,
     nombre: 'Carlos',
     apellido: 'López',
     email: 'usuario@example.com',
@@ -43,7 +43,7 @@ export const pacientesIniciales:Paciente[] = [
     estado: 'en_espera'
   },
   {
-    id: '4',
+    id: 4,
     nombre: 'Ana',
     apellido: 'Martínez',
     email: 'usuario@example.com',
@@ -53,7 +53,7 @@ export const pacientesIniciales:Paciente[] = [
     estado: 'activo'
   },
   {
-    id: '5',
+    id: 5,
     nombre: 'Luis',
     apellido: 'Rodríguez',
     email: 'usuario@example.com',

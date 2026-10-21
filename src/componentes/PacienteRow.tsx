@@ -2,10 +2,10 @@ import type { Paciente } from '../types/paciente';
 import { BadgeEstado } from './BadgeEstado';
 
 export interface PacienteProps extends Paciente{
-    onEliminar:() => void;
+    onEliminar:(id:number) => void;
 }
 
-export function PacienteRow({nombre, apellido, email, telefono, estado, especialidadAsignada, ultimaCita, onEliminar}: PacienteProps) {
+export function PacienteRow({id, nombre, apellido, email, telefono, estado, especialidadAsignada, ultimaCita, onEliminar}: PacienteProps) {
     //Creamos las filas de la tabla con el <tr> de cada paciente y <td> para cada dato del paciente.
     return (
         <tr className="group border-b border-gray-100 transition-colors duration-150 hover:bg-blue-50/60">
@@ -47,7 +47,7 @@ export function PacienteRow({nombre, apellido, email, telefono, estado, especial
                 <button type="button" className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                     <span className="hidden sm:inline">Ver Detalles</span>
                 </button>
-                <button type="button" onClick={onEliminar} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                <button type="button" onClick={()=>onEliminar(id)} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                     <span className="hidden sm:inline">Eliminar</span>
                 </button>
                 <button type="button" className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
