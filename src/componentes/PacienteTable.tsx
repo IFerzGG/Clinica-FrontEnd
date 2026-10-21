@@ -3,10 +3,10 @@ import type { Paciente } from "../types/paciente"
 
 export interface PacienteProps {
     pacientes:Paciente[];
+    onEliminar:(id:number) => void;
 }
 
-export function PacienteTable({pacientes}:PacienteProps) {
-    const handleEliminar = () => {}
+export function PacienteTable({pacientes, onEliminar}:PacienteProps) {
     
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -61,7 +61,7 @@ export function PacienteTable({pacientes}:PacienteProps) {
                                             estado={paciente.estado}
                                             especialidadAsignada={paciente.especialidadAsignada}
                                             ultimaCita={paciente.ultimaCita}
-                                            onEliminar={handleEliminar}
+                                            onEliminar={onEliminar}
                                         />
                                     ))
                                 )
