@@ -11,6 +11,20 @@ export interface Paciente {
   estado: EstadoPaciente;
 }
 
+export type FormPaciente = Omit<Paciente, "id" | "estado"> & {
+  estado: EstadoPaciente | "";
+};
+
+export const estadoInicial:FormPaciente = {
+  nombre: "",
+  apellido: "",
+  email: "",
+  telefono: "",
+  estado: "",
+  especialidadAsignada: "",
+  ultimaCita: "",
+}
+
 export const pacientesIniciales:Paciente[] = [
   {
     id: 1,
