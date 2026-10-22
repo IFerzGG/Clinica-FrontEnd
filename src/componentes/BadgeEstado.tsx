@@ -1,7 +1,7 @@
 import type {EstadoPaciente} from '../types/paciente';
 
 export interface BadgeEstadoProps {
-  estado: EstadoPaciente;
+  estado: EstadoPaciente ;
 }
 
 const colorPorEstado: Record<EstadoPaciente, string> = {

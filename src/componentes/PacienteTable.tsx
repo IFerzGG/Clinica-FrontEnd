@@ -4,9 +4,10 @@ import type { Paciente } from "../types/paciente"
 export interface PacienteProps {
     pacientes:Paciente[];
     onEliminar:(id:number) => void;
+    onEditar:(paciente:Paciente) => void;
 }
 
-export function PacienteTable({pacientes, onEliminar}:PacienteProps) {
+export function PacienteTable({pacientes, onEliminar, onEditar}:PacienteProps) {
     
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -53,6 +54,7 @@ export function PacienteTable({pacientes, onEliminar}:PacienteProps) {
                                 : (
                                     pacientes.map((paciente) => (
                                         <PacienteRow 
+                                            key={paciente.id}
                                             id={paciente.id}
                                             nombre={paciente.nombre}
                                             apellido={paciente.apellido}
@@ -62,6 +64,7 @@ export function PacienteTable({pacientes, onEliminar}:PacienteProps) {
                                             especialidadAsignada={paciente.especialidadAsignada}
                                             ultimaCita={paciente.ultimaCita}
                                             onEliminar={onEliminar}
+                                            onEditar={onEditar}
                                         />
                                     ))
                                 )
