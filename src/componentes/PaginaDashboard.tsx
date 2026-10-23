@@ -3,15 +3,20 @@ import {MetricCard} from "./MetricCard";
 import {StatusBadge} from "./StatusBadge";
 import type {Metrica} from '../types/index';
 
-export function PaginaDashboard() {
-    const [pacientes, setPacientes] = useState(128);
+interface PaginaDashboardProps {
+  totalPacientes: number;
+  totalCitas:number;
+  citasPendientes:number;
+}
+
+export function PaginaDashboard({totalPacientes, totalCitas, citasPendientes}:PaginaDashboardProps) {
     const [mantenimiento, setMantenimiento] = useState(false);
 
     const metricas: Metrica[] = [
         {
             id: 'pacientes',
             titulo: 'Pacientes',
-            valor: pacientes,
+            valor: totalPacientes,
             descripcion: 'Pacientes registrados',
             tendencia: 'positiva',
             icono: '👥',
@@ -19,7 +24,7 @@ export function PaginaDashboard() {
         {
             id: 'citas',
             titulo: 'Citas Hoy',
-            valor: 24,
+            valor: totalCitas,
             descripcion: 'Citas programadas para hoy',
             tendencia: 'neutra',
             icono: '📅',
@@ -27,7 +32,7 @@ export function PaginaDashboard() {
         {
             id: 'pendientes',
             titulo: 'Consultas Pendientes',
-            valor: 8,
+            valor: citasPendientes,
             descripcion: 'Consultas por atender',
             tendencia: 'negativa',
             icono: '⏳',
@@ -74,16 +79,6 @@ export function PaginaDashboard() {
           {metricas.map((metrica) => (
             <div key={metrica.id}>
               <MetricCard metrica={metrica} />
-              {metrica.id === 'pacientes' && (
-                <div className="mt-3 flex gap-2">
-                  <button type="button" aria-label="Disminuir pacientes"onClick={() => setPacientes((valor) => valor - 1)} className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700">
-                    -
-                  </button>
-                  <button type="button" aria-label="Aumentar pacientes" onClick={() => setPacientes((valor) => valor + 1)} className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700">
-                    +
-                  </button>
-                </div>
-              )}
             </div>
           ))}
         </section>
