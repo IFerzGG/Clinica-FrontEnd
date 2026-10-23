@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import { BuscadorPacientes } from "../componentes/BuscadorPacientes";
 import { PacienteTable } from "../componentes/PacienteTable";
-import { pacientesIniciales } from "../types/paciente";
 import type { Paciente } from "../types/paciente";
 import { FormularioPaciente } from "../componentes/FormularioPaciente";
 
-export function PaginaPaciente (){
+interface PaginaPacienteProps {
+  pacientes: Paciente[];
+  setPacientes: Dispatch<SetStateAction<Paciente[]>>;
+}
+
+export function PaginaPaciente ({pacientes, setPacientes}:PaginaPacienteProps){
   const [query, setQuery] = useState('');
-  const [pacientes, setPacientes] = useState<Paciente[]>(pacientesIniciales);
   const [estado, setEstado] = useState('todos');
   const [mostrarForm, setMostrarForm] = useState(false);
   const [pacienteEditar, setPacienteEditar] = useState<Paciente | null>(null);

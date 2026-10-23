@@ -31,3 +31,5 @@ export const citaInicial:CitaFormData = {
     motivo: "",
     urgencia: "media",
 };
+
+export const citasAgregadas:CitaFormData[] = [];
