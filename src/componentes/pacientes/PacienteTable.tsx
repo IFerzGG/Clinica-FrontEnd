@@ -1,5 +1,5 @@
-import { PacienteRow } from "../componentes/PacienteRow";
-import type { Paciente } from "../types/paciente"
+import { PacienteRow } from "./PacienteRow"; 
+import type { Paciente } from "../../types/paciente"
 
 export interface PacienteProps {
     pacientes:Paciente[];
