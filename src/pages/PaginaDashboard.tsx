@@ -1,6 +1,6 @@
 import {useState} from "react";
-import {MetricCard} from "./MetricCard";
-import {StatusBadge} from "./StatusBadge";
+import {MetricCard} from "../componentes/dashboard/MetricCard";
+import {StatusBadge} from "../componentes/dashboard/StatusBadge";
 import type {Metrica} from '../types/index';
 
 interface PaginaDashboardProps {

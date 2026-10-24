@@ -1,8 +1,8 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { BuscadorPacientes } from "../componentes/BuscadorPacientes";
-import { PacienteTable } from "../componentes/PacienteTable";
+import { BuscadorPacientes } from "../componentes/pacientes/BuscadorPacientes";
+import { PacienteTable } from "../componentes/pacientes/PacienteTable";
 import type { Paciente } from "../types/paciente";
-import { FormularioPaciente } from "../componentes/FormularioPaciente";
+import { FormularioPaciente } from "../componentes/pacientes/FormularioPaciente";
 
 interface PaginaPacienteProps {
   pacientes: Paciente[];

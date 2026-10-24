@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from "react";
-import FormularioCita from "../componentes/FormularioCita";
+import FormularioCita from "../componentes/citas/FormularioCita";
 import type { CitaFormData } from "../schemas/citaSchema";
 
 interface PaginaCitasProps {

@@ -1,9 +1,9 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useMedicos } from "../hooks/useMedicos";
-import { citaSchema, obtenerFechaLocal, type CitaFormData, } from "../schemas/citaSchema";
+import { useMedicos } from "../../hooks/useMedicos";
+import { citaSchema, obtenerFechaLocal, type CitaFormData } from "../../schemas/citaSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { citaInicial } from "../types/medico";
+import { citaInicial } from "../../types/medico"; 
 
 interface FormularioCitasProps {
   setCitas: Dispatch<SetStateAction<CitaFormData[]>>;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { estadoInicial, type FormPaciente, type Paciente } from "../types/paciente";
+import { estadoInicial, type FormPaciente, type Paciente } from "../../types/paciente";
 
 type FormularioProps = {
     pacienteEditar:Paciente | null;
