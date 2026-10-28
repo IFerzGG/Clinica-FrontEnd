@@ -62,7 +62,7 @@ export function PacienteTable({pacientes, onEliminar, onEditar}:PacienteProps) {
                                             telefono={paciente.telefono}
                                             estado={paciente.estado}
                                             especialidadAsignada={paciente.especialidadAsignada}
-                                            ultimaCita={paciente.ultimaCita}
+                                            fechaNacimiento={paciente.fechaNacimiento}
                                             onEliminar={onEliminar}
                                             onEditar={onEditar}
                                         />

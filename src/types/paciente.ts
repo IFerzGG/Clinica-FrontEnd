@@ -1,4 +1,4 @@
-export type EstadoPaciente = 'activo' | 'inactivo' | 'en_espera';
+export type EstadoPaciente = 'ACTIVO' | 'INACTIVO' | 'EN_ESPERA';
 
 export interface Paciente {
   id: number;
@@ -7,7 +7,7 @@ export interface Paciente {
   email: string;
   telefono: string;
   especialidadAsignada: string;
-  ultimaCita: string;
+  fechaNacimiento: string;
   estado: EstadoPaciente;
 }
 
@@ -22,7 +22,7 @@ export const estadoInicial:FormPaciente = {
   telefono: "",
   estado: "",
   especialidadAsignada: "",
-  ultimaCita: "",
+  fechaNacimiento: "",
 }
 
 export const pacientesIniciales:Paciente[] = [
@@ -33,8 +33,8 @@ export const pacientesIniciales:Paciente[] = [
     email: 'usuario@example.com',
     telefono: '123-456-7890',
     especialidadAsignada: 'Cardiología',
-    ultimaCita: '2023-10-15',
-    estado: 'activo'
+    fechaNacimiento: '2023-10-15',
+    estado: 'ACTIVO'
   },
   {
     id: 2,
@@ -43,8 +43,8 @@ export const pacientesIniciales:Paciente[] = [
     email: 'usuario@example.com',
     telefono: '098-765-4321',
     especialidadAsignada: 'Neurología',
-    ultimaCita: '2023-10-16',
-    estado: 'inactivo'
+    fechaNacimiento: '2023-10-16',
+    estado: 'INACTIVO'
   },
   {
     id: 3,
@@ -53,8 +53,8 @@ export const pacientesIniciales:Paciente[] = [
     email: 'usuario@example.com',
     telefono: '555-555-5555',
     especialidadAsignada: 'Medicina General',
-    ultimaCita: '2023-10-17',
-    estado: 'en_espera'
+    fechaNacimiento: '2023-10-17',
+    estado: 'EN_ESPERA'
   },
   {
     id: 4,
@@ -63,8 +63,8 @@ export const pacientesIniciales:Paciente[] = [
     email: 'usuario@example.com',
     telefono: '111-222-3333',
     especialidadAsignada: 'Pediatría',
-    ultimaCita: '2023-10-18',
-    estado: 'activo'
+    fechaNacimiento: '2023-10-18',
+    estado: 'ACTIVO'
   },
   {
     id: 5,
@@ -73,7 +73,7 @@ export const pacientesIniciales:Paciente[] = [
     email: 'usuario@example.com',
     telefono: '444-444-4444',
     especialidadAsignada: 'Dermatología',
-    ultimaCita: '2023-10-19',
-    estado: 'inactivo'
+    fechaNacimiento: '2023-10-19',
+    estado: 'INACTIVO'
   }
 ]

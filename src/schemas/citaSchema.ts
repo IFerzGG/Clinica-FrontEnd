@@ -1,6 +1,7 @@
 import {z} from 'zod';
 
-export const URGENCIAS = ['baja', 'media', 'alta', 'critica'] as const;
+export const URGENCIAS = ['BAJA', 'MEDIA', 'ALTA', 'CRITICA'] as const;
+export const ESTADOCITA = ['PROGRAMADA', 'COMPLETADA', 'CANCELADA'] as const;
 
 export function obtenerFechaLocal():string {
     const today = new Date();
@@ -41,6 +42,9 @@ export const citaSchema = z.object({
     hora: z
         .string()
         .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "La hora debe estar entre 00:00 y 23:59"),
+    
+    estado: z
+        .enum(ESTADOCITA, {error:'Debes seleccionar un nivel de estado'}), 
 
     motivo: z
         .string()

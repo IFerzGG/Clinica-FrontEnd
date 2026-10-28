@@ -1,17 +1,21 @@
 import { useParams } from "react-router"
-import { pacientesIniciales, type EstadoPaciente } from "../types/paciente";
+import { pacientesIniciales, type EstadoPaciente, type Paciente } from "../types/paciente";
 import { NotFound } from "./NotFound";
 import { BadgeEstado } from "../componentes/pacientes/BadgeEstado";
 
 const colorPorEstado: Record<EstadoPaciente, string> = {
-  activo: 'bg-emerald-500',
-  inactivo: 'bg-rose-500',
-  en_espera: 'bg-yellow-500',
+  ACTIVO: 'bg-emerald-500',
+  INACTIVO: 'bg-rose-500',
+  EN_ESPERA: 'bg-yellow-500',
 };
 
-export function PaginaDetallePacientes () {
+interface DetalleProps {
+    pacientes:Paciente[]
+}
+
+export function PaginaDetallePacientes ({pacientes}:DetalleProps) {
     const {id} = useParams();
-    const paciente = pacientesIniciales.find((p) => String(p.id) === id)
+    const paciente = pacientes.find((p) => String(p.id) === id)
 
     if(!paciente){
         return <NotFound/>
@@ -101,7 +105,7 @@ export function PaginaDetallePacientes () {
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-500">
-                    Especialidad Asignada y ultima cita registrada
+                    Especialidad Asignada y Fecha de Nacimiento
                 </p>
 
                 <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -115,10 +119,10 @@ export function PaginaDetallePacientes () {
                     </div>
                     <div className="rounded-lg bg-gray-50 p-4">
                         <p className="text-sm font-medium text-gray-500">
-                            Ultima Cita
+                            Fecha de Nacimiento
                         </p>
                         <p className="mt-2 text-lg font-semibold text-gray-900">
-                            {paciente.ultimaCita}
+                            {paciente.fechaNacimiento}
                         </p>
                     </div>
                 </div>

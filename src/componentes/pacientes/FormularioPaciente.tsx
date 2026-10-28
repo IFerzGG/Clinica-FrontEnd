@@ -167,14 +167,14 @@ export function FormularioPaciente({pacienteEditar, onCancelar, onAgregar}:Formu
 
                     {/* Última cita */}
                     <div className="sm:col-span-2">
-                        <label htmlFor="ultimaCita" className="mb-1.5 block text-sm font-medium text-gray-700" >
-                            Última cita
+                        <label htmlFor="fechaNacimiento" className="mb-1.5 block text-sm font-medium text-gray-700" >
+                            Fecha de Nacimiento
                         </label>
                         <input
-                            id="ultimaCita"
-                            name="ultimaCita"
+                            id="fechaNacimiento"
+                            name="fechaNacimiento"
                             type="date"
-                            value={formulario.ultimaCita}
+                            value={formulario.fechaNacimiento}
                             onChange={handleChangeDefinitivo }
                             className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-300"
                         />
