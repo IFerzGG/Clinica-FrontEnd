@@ -28,8 +28,9 @@ export const citaInicial:CitaFormData = {
     medicoId: "",
     fecha: "",
     hora: "",
+    estado:'PROGRAMADA',
     motivo: "",
-    urgencia: "media",
+    urgencia: "MEDIA",
 };
 
 export const citasAgregadas:CitaFormData[] = [];

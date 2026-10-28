@@ -7,9 +7,10 @@ interface PaginaDashboardProps {
   totalPacientes: number;
   totalCitas:number;
   citasPendientes:number;
+  medicos:number;
 }
 
-export function PaginaDashboard({totalPacientes, totalCitas, citasPendientes}:PaginaDashboardProps) {
+export function PaginaDashboard({totalPacientes, totalCitas, citasPendientes, medicos}:PaginaDashboardProps) {
     const [mantenimiento, setMantenimiento] = useState(false);
 
     const metricas: Metrica[] = [
@@ -23,9 +24,9 @@ export function PaginaDashboard({totalPacientes, totalCitas, citasPendientes}:Pa
         },
         {
             id: 'citas',
-            titulo: 'Citas Hoy',
+            titulo: 'Citas Total',
             valor: totalCitas,
-            descripcion: 'Citas programadas para hoy',
+            descripcion: 'Citas Registradas',
             tendencia: 'neutra',
             icono: '📅',
         },
@@ -38,10 +39,10 @@ export function PaginaDashboard({totalPacientes, totalCitas, citasPendientes}:Pa
             icono: '⏳',
         },
         {
-            id: 'disponibilidad',
-            titulo: 'Disponibilidad',
-            valor: '98%',
-            descripcion: 'Sistema disponible',
+            id: 'medicos',
+            titulo: 'Medicos',
+            valor: medicos,
+            descripcion: 'Medicos Registrados',
             tendencia: 'positiva',
             icono: '✓',
         },

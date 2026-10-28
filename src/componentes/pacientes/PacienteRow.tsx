@@ -7,7 +7,7 @@ export interface PacienteProps extends Paciente{
     onEditar:(paciente:Paciente) => void;
 }
 
-export function PacienteRow({id, nombre, apellido, email, telefono, estado, especialidadAsignada, ultimaCita, onEliminar,onEditar}: PacienteProps) {
+export function PacienteRow({id, nombre, apellido, email, telefono, estado, especialidadAsignada, fechaNacimiento, onEliminar,onEditar}: PacienteProps) {
     //Creamos las filas de la tabla con el <tr> de cada paciente y <td> para cada dato del paciente.
     return (
         <tr className="group border-b border-gray-100 transition-colors duration-150 hover:bg-blue-50/60">
@@ -41,7 +41,7 @@ export function PacienteRow({id, nombre, apellido, email, telefono, estado, espe
         </td>
         {/*--------------------------------------------------------------------------------------*/}
         <td className="hidden px-3 py-4 text-sm text-gray-600 md:table-cell">
-            {ultimaCita}
+            {fechaNacimiento}
         </td>
         {/*--------------------------------------------------------------------------------------*/}
         <td className="py-4 pl-3 pr-4 text-right sm:pr-6">
@@ -52,7 +52,7 @@ export function PacienteRow({id, nombre, apellido, email, telefono, estado, espe
                 <button type="button" onClick={()=>onEliminar(id)} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                     <span className="hidden sm:inline">❌ </span>
                 </button>
-                <button type="button" onClick={()=>onEditar({id,nombre,apellido,email,telefono,estado,especialidadAsignada,ultimaCita})} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
+                <button type="button" onClick={()=>onEditar({id,nombre,apellido,email,telefono,estado,especialidadAsignada,fechaNacimiento})} className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 transition-all duration-150 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30">
                     <span className="hidden sm:inline">✏️</span>
                 </button>
             </div>

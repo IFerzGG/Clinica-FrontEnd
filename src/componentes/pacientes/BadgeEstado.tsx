@@ -5,15 +5,15 @@ export interface BadgeEstadoProps {
 }
 
 const colorPorEstado: Record<EstadoPaciente, string> = {
-  activo: 'bg-emerald-100 text-emerald-700',
-  inactivo: 'bg-rose-100 text-rose-700',
-  en_espera: 'bg-yellow-100 text-yellow-700',
+  ACTIVO: 'bg-emerald-100 text-emerald-700',
+  INACTIVO: 'bg-rose-100 text-rose-700',
+  EN_ESPERA: 'bg-yellow-100 text-yellow-700',
 };
 
 const estilosEstado: Record<EstadoPaciente, string> = {
-  activo: 'Activo',
-  inactivo: 'Inactivo',
-  en_espera: 'En Espera',
+  ACTIVO: 'Activo',
+  INACTIVO: 'Inactivo',
+  EN_ESPERA: 'En Espera',
 }
 
 export function BadgeEstado({ estado }: BadgeEstadoProps) {

@@ -30,17 +30,17 @@ export function BuscadorPacientes({query, onQuery, onFiltro}:QueryProps){
                     Todos
                 </button>
 
-                <button type="button" onClick={()=> onFiltro('activo')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
+                <button type="button" onClick={()=> onFiltro('ACTIVO')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     Activos
                 </button>
 
-                <button type="button" onClick={()=> onFiltro('en_espera')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
+                <button type="button" onClick={()=> onFiltro('EN_ESPERA')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
                     <span className="h-2 w-2 rounded-full bg-amber-500" />
                     En_espera
                 </button>
 
-                <button type="button" onClick={()=> onFiltro('inactivo')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
+                <button type="button" onClick={()=> onFiltro('INACTIVO')} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:border-blue-200 hover:bg-blue-50">
                     <span className="h-2 w-2 rounded-full bg-rose-500" />
                     Inactivos
                 </button>
