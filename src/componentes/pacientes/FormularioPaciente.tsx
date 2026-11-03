@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import { estadoInicial, type FormPaciente, type Paciente } from "../../types/paciente";
+import { pacienteInicial, type Paciente, type PacienteFormData } from "../../types/paciente";
 
 type FormularioProps = {
     pacienteEditar:Paciente | null;
     onCancelar:() => void;
-    onAgregar:(paciente:Paciente) => void;
+    onAgregar:(paciente:PacienteFormData, id?:number) => void;
 }
 
 export function FormularioPaciente({pacienteEditar, onCancelar, onAgregar}:FormularioProps) {
-    const [formulario, setFormulario] = useState<FormPaciente|Paciente>(pacienteEditar??estadoInicial)
+    const [formulario, setFormulario] = useState<PacienteFormData>(
+        pacienteEditar
+            ? {
+        nombre: pacienteEditar.nombre,
+        apellido: pacienteEditar.apellido,
+        email: pacienteEditar.email,
+        telefono: pacienteEditar.telefono,
+        estado: pacienteEditar.estado,
+        fechaNacimiento: pacienteEditar.fechaNacimiento.slice(0,10),
+      }
+      :pacienteInicial
+    );
 
     const handleNombreChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFormulario({...formulario, nombre: e.target.value})
@@ -24,13 +35,7 @@ export function FormularioPaciente({pacienteEditar, onCancelar, onAgregar}:Formu
             return;
         }
 
-        const nuevoPaciente:Paciente = {
-            id: pacienteEditar?.id ?? Date.now(),
-            ...formulario,
-            estado:formulario.estado,
-        }
-
-        onAgregar(nuevoPaciente)
+        onAgregar(formulario, pacienteEditar?.id)
     }
 
     return (
@@ -134,38 +139,13 @@ export function FormularioPaciente({pacienteEditar, onCancelar, onAgregar}:Formu
                             <option value="" disabled>
                                 Seleccionar estado
                             </option>
-                            <option value="activo">Activo</option>
-                            <option value="inactivo">Inactivo</option>
-                            <option value="en_espera">En espera</option>
+                            <option value="ACTIVO">Activo</option>
+                            <option value="INACTIVO">Inactivo</option>
+                            <option value="EN_ESPERA">En espera</option>
                         </select>
                     </div>
 
-                    {/* Especialidad */}
-                    <div className="sm:col-span-2">
-                        <label htmlFor="especialidadAsignada" className="mb-1.5 block text-sm font-medium text-gray-700" >
-                            Especialidad asignada
-                        </label>
-                        <select
-                            id="especialidadAsignada"
-                            name="especialidadAsignada"
-                            value={formulario.especialidadAsignada}
-                            onChange={handleChangeDefinitivo}
-                            className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-300"
-                        >
-                            <option value="" disabled>
-                                Seleccionar especialidad
-                            </option>
-                            <option value="medicina_general">
-                                Medicina general
-                            </option>
-                            <option value="cardiologia">Cardiología</option>
-                            <option value="dermatologia">Dermatología</option>
-                            <option value="pediatria">Pediatría</option>
-                            <option value="psicologia">Psicología</option>
-                        </select>
-                    </div>
-
-                    {/* Última cita */}
+                    {/* Fecha De Nacimiento*/}
                     <div className="sm:col-span-2">
                         <label htmlFor="fechaNacimiento" className="mb-1.5 block text-sm font-medium text-gray-700" >
                             Fecha de Nacimiento

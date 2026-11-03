@@ -1,60 +1,38 @@
-import {z} from 'zod';
+import { z } from 'zod';
+import { ESTADOS_CITA, URGENCIAS_CITA } from '../types/cita';
 
-export const URGENCIAS = ['BAJA', 'MEDIA', 'ALTA', 'CRITICA'] as const;
-export const ESTADOCITA = ['PROGRAMADA', 'COMPLETADA', 'CANCELADA'] as const;
-
-export function obtenerFechaLocal():string {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2,'0');
-    const day = String(today.getDay()).padStart(2,'0');
-
-    return `${year}-${month}-${day}`;
-}
-
-function esFechaReal(fecha:string):boolean {
-    const [year,month,day] = fecha.split("-").map(Number)
-    const fechaComprobada = new Date(year, month - 1, day);
-    
-    return (
-        fechaComprobada.getFullYear() === year &&
-        fechaComprobada.getMonth() === month-1 &&
-        fechaComprobada.getDate() === day
-    );
+export function obtenerFechaLocal(): string {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 }
 
 export const citaSchema = z.object({
-    pacienteNombre: z
-        .string()
-        .trim()
-        .min(3, 'El nombre debe tener al menos 3 caracteres'),
+  pacienteId: z
+    .string()
+    .min(1, 'Selecciona un paciente')
+    .refine((id) => Number.isInteger(Number(id)) && Number(id) > 0, 'Selecciona un paciente válido'),
 
-    medicoId: z
-        .string()
-        .min(1, 'Debes Selecionar un medico'),
+  medicoId: z
+    .string()
+    .min(1, 'Selecciona un médico')
+    .refine((id) => Number.isInteger(Number(id)) && Number(id) > 0, 'Selecciona un médico válido'),
 
-    fecha: z
-        .string()
-        .regex(/^\d{4}-\d{2}-\d{2}$/, "La fecha debe tener formato YYYY-MM-DD")
-        .refine(esFechaReal,'La Fecha no es Valida')
-        .refine((fecha) => fecha >= obtenerFechaLocal(), 'La Fecha debe ser Futura'),
+  fechaHora: z
+    .string()
+    .min(1, 'Indica la fecha y hora')
+    .refine((value) => !Number.isNaN(new Date(value).getTime()), 'Fecha y hora no válidas'),
 
-    hora: z
-        .string()
-        .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "La hora debe estar entre 00:00 y 23:59"),
-    
-    estado: z
-        .enum(ESTADOCITA, {error:'Debes seleccionar un nivel de estado'}), 
+  estado: z
+    .enum(ESTADOS_CITA),
 
-    motivo: z
-        .string()
-        .trim()
-        .min(10, "El motivo debe tener al menos 10 caracteres")
-        .max(500, "El motivo no puede superar los 500 caracteres"),
+  motivo: z
+    .string()
+    .trim()
+    .min(1, 'El motivo es obligatorio')
+    .max(250, 'El motivo no puede superar 250 caracteres'),
 
-    urgencia: z
-        .enum(URGENCIAS, { error: "Debes seleccionar un nivel de urgencia", }),
+  urgencia: z
+    .enum(URGENCIAS_CITA),
 });
 
-export type UrgenciaCita = (typeof URGENCIAS)[number];
 export type CitaFormData = z.infer<typeof citaSchema>;

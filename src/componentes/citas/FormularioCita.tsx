@@ -1,239 +1,136 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
-import { useMedicos } from "../../hooks/useMedicos";
-import { citaSchema, obtenerFechaLocal, type CitaFormData } from "../../schemas/citaSchema";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { citaInicial } from "../../types/medico"; 
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { citaSchema, type CitaFormData } from '../../schemas/citaSchema';
+import type { Cita, CitaFormulario } from '../../types/cita';
+import type { Paciente } from '../../types/paciente';
+import { useMedicos } from '../../hooks/useMedicos';
+import type { Medicos } from '../../types/medico';
 
-interface FormularioCitasProps {
-  setCitas: Dispatch<SetStateAction<CitaFormData[]>>;
+interface Props {
+  citaEditar: Cita | null;
+  medicos:Medicos[]
+  pacientes: Paciente[];
+  onCancelar: () => void;
+  onGuardar: (datos: CitaFormulario, id?: number) => Promise<void>;
 }
 
-export default function FormularioCita({setCitas}:FormularioCitasProps) {
-    const {medicos, cargando} = useMedicos();
-    const [confirmacion, setConfirmacion] = useState<CitaFormData | null>(null);
+function aFechaHoraLocal(fecha: string): string {
+  const date = new Date(fecha);
+  if (Number.isNaN(date.getTime())) return '';
+  const pad = (value: number) => String(value).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
 
-    const {register, handleSubmit, reset, formState:{errors, isSubmitting} } = useForm<CitaFormData>({
-        resolver: zodResolver(citaSchema),
-        defaultValues:citaInicial,
+export default function FormularioCita({ citaEditar, pacientes, medicos, onCancelar, onGuardar }: Props) {
+  //const { medicos, cargando } = useMedicos();
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<CitaFormData>({
+    resolver: zodResolver(citaSchema),
+    defaultValues: { pacienteId: '', medicoId: '', fechaHora: '', estado: 'PROGRAMADA', motivo: '', urgencia: 'MEDIA' },
+  });
+
+  useEffect(() => {
+    if (!citaEditar) {
+      reset({ pacienteId: '', medicoId: '', fechaHora: '', estado: 'PROGRAMADA', motivo: '', urgencia: 'MEDIA' });
+      return;
+    }
+    reset({
+      pacienteId: String(citaEditar.pacienteId),
+      medicoId: String(citaEditar.medicoId),
+      fechaHora: aFechaHoraLocal(citaEditar.fecha),
+      estado: citaEditar.estado,
+      motivo: citaEditar.motivo,
+      urgencia: citaEditar.urgencia,
     });
+  }, [citaEditar, reset]);
 
-    const onSubmit = async (datos:CitaFormData):Promise<void> => {
-        await new Promise<void> ((resolve) => {
-            setTimeout(resolve, 1500);
-        });
-        setConfirmacion(datos);
-        setCitas((citasActuales) => [...citasActuales, datos]);
-        reset();
-    }
+  const clase = 'w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100';
+  const error = 'mt-1 text-sm text-red-600';
 
-    const claseNombre = 'w-full rounded-lg border px-3 py-2 outline-none focus:ring-2';
-    const campoClase = (tieneError:boolean):string => 
-        `${claseNombre} ${
-            tieneError
-                ? "border-red-500 focus:ring-red-200"
-                : "border-gray-300 focus:border-blue-500 focus:ring-blue-100"
-        }`;
-    const errorClase = "mt-1 text-sm text-red-600";
+  const submit = async (datos: CitaFormData) => {
+    await onGuardar(datos, citaEditar?.id);
+  };
 
-    const agendarOtraCita = () => {
-        reset();
-        setConfirmacion(null);
-    }
-
-    if(confirmacion) {
-        const medicoSeleccionado = medicos.find((medico) => medico.id === confirmacion.medicoId);
-
-        return (
-            <section className="mx-auto max-w-2xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <div className="mb-4 text-center">
-                    <div className="mb-3 text-4xl text-green-600">
-                        ✓
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900">
-                        Cita Agendada !
-                        </h2>
-                    <p className="mt-2 text-gray-600">
-                        La Cita se registro correctamente en esta simulacion
-                    </p>
-                </div>
-
-                <div className="space-y-3 rounded-lg bg-gray-50 p-4">
-                    <p>
-                        <strong>
-                            Paciente:
-                        </strong>{''}
-                        {confirmacion?.pacienteNombre}
-                    </p>
-                    <p>
-                        <strong>
-                            Medico:
-                        </strong>{''}
-                        {medicoSeleccionado?.nombre ?? 'Medico Seleccionado'}
-                    </p>
-                    <p>
-                        <strong>Fercha:</strong> {confirmacion.fecha}
-                    </p>
-                    <p>
-                        <strong>Hora:</strong> {confirmacion.hora}
-                    </p>
-                    <p>
-                        <strong>Motivo:</strong> {confirmacion.motivo}
-                    </p>
-                    <p>
-                        <strong>Urgencia:</strong> {confirmacion.urgencia}
-                    </p>
-                </div>
-
-                <button type='button' onClick={agendarOtraCita} className="mt-5 w-full rounded-lg bg-blue-600 px-4 py-3 font-medium text-white hover:bg-blue-700">
-                    Agendar otra Cita
-                </button>
-            </section>
-        );
-    }
-
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="mx-auto max-w-2xl space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                    Agendar Nueva Cita
-                </h2>
-                <p className="mt-1 text-sm text-gray-600">
-                    Completa los datos para programar una consulta medica.
-                </p>
-            </div>
-            
-            <div>
-                <label htmlFor="pacienteNombre" className="mb-1 block font-medium text-gray-700">
-                    Nombre del Paciente
-                </label>
-                <input 
-                    id='pacienteNombre'
-                    type='text'
-                    {...register('pacienteNombre')}
-                    aria-invalid={Boolean(errors.pacienteNombre)}
-                    className={campoClase(Boolean(errors.pacienteNombre))}
-                    placeholder="Nombre Completo"
-                />
-                {errors.pacienteNombre && (
-                    <p className={errorClase}>
-                        {errors.pacienteNombre.message}
-                    </p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="medicoId" className="mb-1 block font-medium text-gray-700">
-                    Medico
-                </label>
-                <select
-                    id='medicoId'
-                    {...register('medicoId')}
-                    disabled={cargando}
-                    aria-invalid={Boolean(errors.medicoId)}
-                    className={campoClase(Boolean(errors.medicoId))}
-                >
-                    <option value=''>
-                        {cargando
-                            ? 'Cargando Medicos...'
-                            : 'Selecciona un Medico'}
-                    </option>
-                    {medicos.map((medico) => (
-                        <option key={medico.id} value={medico.id}>
-                            {medico.nombre}
-                        </option>
-                    ))}
-                </select>
-                {errors.medicoId && (
-                    <p className={errorClase}>
-                        {errors.medicoId.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                    <label htmlFor="fecha" className="mb-1 block font-medium text-gray-700">
-                        Fecha
-                    </label>
-                    <input 
-                        id="fecha"
-                        type="date"
-                        min={obtenerFechaLocal()}
-                        {...register('fecha')}
-                        aria-invalid={Boolean(errors.fecha)}
-                        className={campoClase(Boolean(errors.fecha))}
-                    />
-                    {errors.fecha && (
-                        <p className={errorClase}>
-                            {errors.fecha.message}
-                        </p>
-                    )}
-                </div>
-                <div>
-                    <label htmlFor="hora" className="mb-1 block font-medium text-gray-700">
-                        Hora
-                    </label>
-                    <input 
-                        id="hora"
-                        type="time"
-                        {...register('hora')}
-                        aria-invalid={Boolean(errors.hora)}
-                        className={campoClase(Boolean(errors.hora))}
-                    />
-                    {errors.hora && (
-                        <p className={errorClase}>
-                            {errors.hora.message}
-                        </p>
-                    )}
-                </div>
-            </div>
-            
-            <div>
-                <label htmlFor="motivo" className="mb-1 block font-medium text-gray-700">
-                    Motivo de la consulta
-                </label>
-                <textarea 
-                    id="motivo"
-                    rows={4}
-                    {...register('motivo')}
-                    aria-invalid={Boolean(errors.motivo)}
-                    className={campoClase(Boolean(errors.motivo))}
-                    placeholder="Describe el motivo de la consulta..."
-                />
-                {errors.motivo && (
-                    <p className={errorClase}>
-                        {errors.motivo.message}
-                    </p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="urgencia" className="mb-1 block font-medium text-gray-700">
-                    Nivel de urgencia
-                </label>
-                <select 
-                    id="urgencia"
-                    {...register('urgencia')}
-                    disabled={cargando}
-                    aria-invalid={Boolean(errors.urgencia)}
-                    className={campoClase(Boolean(errors.urgencia))}
-                >
-                    <option value='baja'>Baja</option>
-                    <option value='media'>Media</option>
-                    <option value='alta'>Alta</option>
-                    <option value='critica'>Critica</option>
-                </select>
-                {errors.urgencia && (
-                    <p className={errorClase}>
-                        {errors.urgencia.message}
-                    </p>
-                )}
-            </div>
-
-            <button type="submit" disabled={isSubmitting || cargando} className="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
-                {isSubmitting ? 'Agendando...' : 'Agendar Cita'}
-            </button>
-        </form>
-    );
+  return (
+    <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+      <header className="mb-6 border-b border-gray-100 pb-4">
+        <h2 id="titulo-formulario" className="text-xl font-bold text-gray-900">{citaEditar ? 'Editar cita' : 'Agregar cita'}</h2>
+        <p className="mt-1 text-sm text-gray-500">Completa los datos de la consulta.</p>
+      </header>
+{/*==========================================================================================================================================*/}
+      <form onSubmit={handleSubmit(submit)} noValidate className="space-y-5">
+        <div>
+          <label htmlFor="pacienteId" className="mb-1 block font-medium text-gray-700">
+            Paciente
+          </label>
+          <select id="pacienteId" {...register('pacienteId')} className={clase} >
+            <option value=""> Selecciona un paciente </option>
+            {pacientes.map((paciente) => <option key={paciente.id} value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>)}
+          </select>
+          {errors.pacienteId && <p className={error}>{errors.pacienteId.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}
+        <div>
+          <label htmlFor="medicoId" className="mb-1 block font-medium text-gray-700">
+            Médico
+          </label>
+          <select id="medicoId" {...register('medicoId')} className={clase}>
+            <option value=""> Selecciona un médico </option>
+            {medicos.map((medico) => <option key={medico.id} value={medico.id}>{medico.nombre}--{medico.especialidad.nombre}</option>)}
+          </select>
+          {errors.medicoId && <p className={error}>{errors.medicoId.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}
+        <div>
+          <label htmlFor="fechaHora" className="mb-1 block font-medium text-gray-700">
+            Fecha y hora
+          </label>
+          <input id="fechaHora" type="datetime-local" {...register('fechaHora')} className={clase} />
+          {errors.fechaHora && <p className={error}>{errors.fechaHora.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}        
+        <div>
+          <label htmlFor="estado" className="mb-1 block font-medium text-gray-700">
+            Estado
+          </label>
+          <select id="estado" {...register('estado')} className={clase}>
+            <option value="PROGRAMADA">Programada</option>
+            <option value="COMPLETADA">Completada</option>
+            <option value="CANCELADA">Cancelada</option>
+          </select>
+          {errors.estado && <p className={error}>{errors.estado.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}        
+        <div>
+          <label htmlFor="motivo" className="mb-1 block font-medium text-gray-700">
+            Motivo
+          </label>
+          <textarea id="motivo" rows={3} {...register('motivo')} className={clase} />
+          {errors.motivo && <p className={error}>{errors.motivo.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}
+        <div>
+          <label htmlFor="urgencia" className="mb-1 block font-medium text-gray-700">
+            Urgencia
+          </label>
+          <select id="urgencia" {...register('urgencia')} className={clase}>
+            <option value="BAJA">Baja</option>
+            <option value="MEDIA">Media</option>
+            <option value="ALTA">Alta</option>
+            <option value="CRITICA">Crítica</option>
+          </select>
+          {errors.urgencia && <p className={error}>{errors.urgencia.message}</p>}
+        </div>
+{/*==========================================================================================================================================*/}
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={onCancelar} className="rounded-lg border px-4 py-2 text-gray-700">
+            Cancelar
+          </button>
+          <button type="submit" disabled={isSubmitting} className="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white disabled:opacity-60">
+            {isSubmitting ? 'Guardando…' : citaEditar ? 'Guardar cambios' : 'Agendar cita'}
+          </button>
+        </div>
+      </form>
+    </section>
+  );
 }

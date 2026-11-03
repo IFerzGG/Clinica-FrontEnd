@@ -1,11 +1,9 @@
-import type { CitaFormData } from "../schemas/citaSchema";
-
-export interface Medico {
+export interface Medic {
     id:string;
     nombre:string;
     especialidad:string;
 }
-export const medicosClinica:Medico[] = [
+export const medicosClinica:Medic[] = [
     {
         id:'1',
         nombre:'Ana Lopez',
@@ -23,14 +21,14 @@ export const medicosClinica:Medico[] = [
     }
 ];
 
-export const citaInicial:CitaFormData = {
-    pacienteNombre: "",
-    medicoId: "",
-    fecha: "",
-    hora: "",
-    estado:'PROGRAMADA',
-    motivo: "",
-    urgencia: "MEDIA",
-};
-
-export const citasAgregadas:CitaFormData[] = [];
+export interface Medicos {
+    id:number;
+    nombre:string;
+    email:string;
+    telefono:string;
+    especialidadId:number;
+    especialidad:{
+        id:number;
+        nombre:string;
+    }
+}

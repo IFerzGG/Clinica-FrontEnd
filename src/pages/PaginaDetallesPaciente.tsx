@@ -1,5 +1,5 @@
 import { useParams } from "react-router"
-import { pacientesIniciales, type EstadoPaciente, type Paciente } from "../types/paciente";
+import { type EstadoPaciente, type Paciente } from "../types/paciente";
 import { NotFound } from "./NotFound";
 import { BadgeEstado } from "../componentes/pacientes/BadgeEstado";
 
@@ -114,7 +114,7 @@ export function PaginaDetallePacientes ({pacientes}:DetalleProps) {
                             Especialidad Asignada
                         </p>
                         <p className="mt-2 text-lg font-semibold text-gray-900">
-                            {paciente.especialidadAsignada}
+                            {paciente.estado}
                         </p>
                     </div>
                     <div className="rounded-lg bg-gray-50 p-4">
@@ -122,7 +122,7 @@ export function PaginaDetallePacientes ({pacientes}:DetalleProps) {
                             Fecha de Nacimiento
                         </p>
                         <p className="mt-2 text-lg font-semibold text-gray-900">
-                            {paciente.fechaNacimiento}
+                            {paciente.fechaNacimiento.slice(0,10)}
                         </p>
                     </div>
                 </div>

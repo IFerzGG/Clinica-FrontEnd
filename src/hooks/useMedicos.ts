@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { medicosClinica, type Medico } from "../types/medico"
+import { medicosClinica, type Medic } from "../types/medico"
 
 interface UseMedicosResultado {
-    medicos:Medico[];
+    medicos:Medic[];
     cargando:boolean;
 }
 
 export function useMedicos():UseMedicosResultado {
-    const [medicos, setMedicos] = useState<Medico[]>([]);
+    const [medicos, setMedicos] = useState<Medic[]>([]);
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
