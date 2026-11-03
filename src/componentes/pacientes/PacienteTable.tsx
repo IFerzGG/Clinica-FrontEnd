@@ -16,27 +16,23 @@ export function PacienteTable({pacientes, onEliminar, onEditar}:PacienteProps) {
                     <thead className="bg-gray-50">
                         <tr>
                             {/*--------------------------------------------------------------------------------------*/}
-                            <th className="px-4 py-3 text-xs font-semibold text-gray-500 sm:pl-6">
+                            <th className="px-3 py-3 text-left text-xs font-semibold text-gray-500 sm:pl-6">
                                 Paciente
                             </th>
                             {/*--------------------------------------------------------------------------------------*/}
-                            <th className="hidden px-3 py-3 text-xs font-semibold text-gray-500 sm:table-cell">
+                            <th className="hidden px-3 py-3 text-left text-xs font-semibold text-gray-500 sm:table-cell">
                                 Telefono
                             </th>
                             {/*--------------------------------------------------------------------------------------*/}
-                            <th className="px-3 py-3 text-xs font-semibold text-gray-500">
+                            <th className="px-3 py-3 text-left text-xs font-semibold text-gray-500">
                                 Estado
                             </th>
                             {/*--------------------------------------------------------------------------------------*/}
-                            <th className="px-3 py-3 text-xs font-semibold text-gray-500">
-                                Especialidad
-                            </th>
-                            {/*--------------------------------------------------------------------------------------*/}
-                            <th className="hidden px-3 py-3 text-xs font-semibold text-gray-500 md:table-cell">
+                            <th className="hidden px-3 py-3 text-left text-xs font-semibold text-gray-500 md:table-cell">
                                 Ultima Cita
                             </th>
                             {/*--------------------------------------------------------------------------------------*/}
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 sm:pr-6">
+                            <th className="px-3 py-3 text-right text-xs font-semibold text-gray-500 sm:pr-6">
                                 Acciones
                             </th>
                         </tr>
@@ -46,7 +42,7 @@ export function PacienteTable({pacientes, onEliminar, onEditar}:PacienteProps) {
                             pacientes.length === 0
                                 ? (
                                     <tr>
-                                        <td colSpan={6} className="py-12 text-center text-sm text-gray-400">
+                                        <td colSpan={5} className="py-12 text-center text-sm text-gray-400">
                                             No Hay Pacientes Para Mostrar
                                         </td>
                                     </tr>
@@ -55,14 +51,7 @@ export function PacienteTable({pacientes, onEliminar, onEditar}:PacienteProps) {
                                     pacientes.map((paciente) => (
                                         <PacienteRow 
                                             key={paciente.id}
-                                            id={paciente.id}
-                                            nombre={paciente.nombre}
-                                            apellido={paciente.apellido}
-                                            email={paciente.email}
-                                            telefono={paciente.telefono}
-                                            estado={paciente.estado}
-                                            especialidadAsignada={paciente.especialidadAsignada}
-                                            fechaNacimiento={paciente.fechaNacimiento}
+                                            paciente={paciente}
                                             onEliminar={onEliminar}
                                             onEditar={onEditar}
                                         />
